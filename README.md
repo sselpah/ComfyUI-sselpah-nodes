@@ -6,7 +6,7 @@
 >[!IMPORTANT]
 > **I hold 0% knowledge on the technicals of IP Adapter so feel free to contribute code AND knowledge to this repository.**
 
-## **You need to have ComfyUI_IPAdapter_plus installed to fully utilize the nodes in this pack!!!** Right now this repository contains nodes that extend ComfyUI_IPAdapter_plus capabilities, **IT IS NOT A REPLACEMENT**
+## **You need to have ComfyUI_IPAdapter_plus installed to fully utilize the nodes in this pack!!!** Right now this repository contains nodes that extend ComfyUI_IPAdapter_plus capabilities, **IT IS NOT A REPLACEMENT**. Therefore refer to the original repository for installations and tutorials.
 
 ## What is this?
 IP Adapter is "Image Prompting Adapter", using this you can prompt an image using an image in addition to using text, this whole process takes in an image, extracts its "features" using a Clip Vision model and inserts those features into your model.
