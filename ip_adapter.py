@@ -183,7 +183,6 @@ class IPAEncoderBatch:
             batch_size=batch_size,
             clipvision_size=clipvision_size,
         )
-        print(is_plus)
 
         if is_plus:
             img_cond_embeds = embeds.penultimate_hidden_states
