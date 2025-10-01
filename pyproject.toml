@@ -1,0 +1,14 @@
+[project]
+name = "comfyui_sselpah_nodes"
+description = "Extension of IPAdapter implementation by cubiq and whoever contributed to that repository"
+version = "1.0.0"
+license = "GPL-3.0 license"
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/sselpah/ComfyUI-sselpah-nodes"
+
+[tool.comfy]
+PublisherId = "sspelah"
+DisplayName = "ComfyUI-sselpah-nodes"
+Icon = ""
