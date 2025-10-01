@@ -1,8 +1,12 @@
 # ComfyUI-sselpah-nodes
-Full credit to this repository and the people who worked on it: https://github.com/cubiq/ComfyUI_IPAdapter_plus/tree/main
+> [!IMPORTANT]
+> Full credit to this repository and the people who worked on it: https://github.com/cubiq/ComfyUI_IPAdapter_plus/tree/main
+> This project is basically 95% ComfyUI_IPAdapter_plus code.
 
-## **You need to have ComfyUI_IPAdapter_plus installed to fully utilize the nodes in this pack!!!**
-Right now this repository contains nodes that extend ComfyUI_IPAdapter_plus capabilities, **IT IS NOT A REPLACEMENT**
+>[!IMPORTANT]
+> **I hold 0% knowledge on the technicals of IP Adapter so feel free to contribute code AND knowledge to this repository.**
+
+## **You need to have ComfyUI_IPAdapter_plus installed to fully utilize the nodes in this pack!!!** Right now this repository contains nodes that extend ComfyUI_IPAdapter_plus capabilities, **IT IS NOT A REPLACEMENT**
 
 ## What is this?
 IP Adapter is "Image Prompting Adapter", using this you can prompt an image using an image in addition to using text, this whole process takes in an image, extracts its "features" using a Clip Vision model and inserts those features into your model.
