@@ -1,7 +1,7 @@
 # ComfyUI-sselpah-nodes
 > [!IMPORTANT]
-> Full credit to this repository and the people who worked on it: https://github.com/cubiq/ComfyUI_IPAdapter_plus/tree/main
-> This project is basically 95% ComfyUI_IPAdapter_plus code.
+> Full credit to this repository and the people who worked on it: https://github.com/cubiq/ComfyUI_IPAdapter_plus
+> This project (sselpah-nodes) is basically 95% ComfyUI_IPAdapter_plus code.
 
 >[!IMPORTANT]
 > **I hold 0% knowledge on the technicals of IP Adapter so feel free to contribute code AND knowledge to this repository.**
