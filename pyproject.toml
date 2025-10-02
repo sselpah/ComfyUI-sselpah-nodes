@@ -9,6 +9,6 @@ dependencies = []
 Repository = "https://github.com/sselpah/ComfyUI-sselpah-nodes"
 
 [tool.comfy]
-PublisherId = "sspelah"
+PublisherId = "sselpah"
 DisplayName = "ComfyUI-sselpah-nodes"
 Icon = ""
