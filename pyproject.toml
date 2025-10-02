@@ -1,5 +1,5 @@
 [project]
-name = "comfyui_sselpah_nodes"
+name = "ComfyUI-sselpah-nodes"
 description = "Extension of IPAdapter implementation by cubiq and whoever contributed to that repository"
 version = "1.0.0"
 license = "GPL-3.0 license"
