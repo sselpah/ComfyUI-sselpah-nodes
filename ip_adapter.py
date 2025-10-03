@@ -83,11 +83,10 @@ class PrepClipVisionBatch:
         try:
             # (C, H, W) uint8 in [0..255], RGB
             chw = read_image(path, mode=ImageReadMode.RGB)
-            # t = (chw.to(torch.float32) / 255.0).permute(1, 2, 0).unsqueeze(0).contiguous()  # (1, H, W, 3)
+            # t = (chw.to(torch.float32) / 255.0).permute(1, 2, 0).unsqueeze(0).contiguous()  # (1, H, W, 3) float32
             t = chw.permute(1, 2, 0).unsqueeze(0)  # (1, H, W, 3) uint8
             return t
         except Exception:
-            # Fallback: keep your old, EXIF-aware path for rare cases
             im = Image.open(path)
             im = ImageOps.exif_transpose(im)
             if im.mode != "RGB":
