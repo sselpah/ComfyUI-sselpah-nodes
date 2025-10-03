@@ -57,3 +57,9 @@ My edit makes them load and save from the folder `models/ipadapter/embeds`, once
 * TONS of experiments with different image datasets of different sizes, concepts, steps, new weight methods, masks (different datasets for different parts of the image), and more.
 * Add weight to the IPA Load Embeds (if possible after saving it).
 * In the case where a dataset is also tagged (tag txt file per image) allow Prep Clip Vision Batch to easily process images only with the tags the user specified in the input (text prompting the image prompting)
+
+## Credits
+- [IPAdapter](https://github.com/tencent-ailab/IP-Adapter/)
+- [ComfyUI](https://github.com/comfyanonymous/ComfyUI)
+- [ComfyUI_IPAdapter_plus](https://github.com/cubiq/ComfyUI_IPAdapter_plus)
+- [ronfarkash](https://github.com/ronfarkash) - setup + code cleanup
