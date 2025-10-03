@@ -56,5 +56,4 @@ My edit makes them load and save from the folder `models/ipadapter/embeds`, once
 ## Plans for the upcoming future
 * TONS of experiments with different image datasets of different sizes, concepts, steps, new weight methods, masks (different datasets for different parts of the image), and more.
 * Add weight to the IPA Load Embeds (if possible after saving it).
-* Add multi-processing for Prep Clip Vision Batch for large image datasets.
 * In the case where a dataset is also tagged (tag txt file per image) allow Prep Clip Vision Batch to easily process images only with the tags the user specified in the input (text prompting the image prompting)
