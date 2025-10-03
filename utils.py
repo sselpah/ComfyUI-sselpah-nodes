@@ -202,7 +202,7 @@ def max_(tensor_list):
 
 # From https://github.com/Jamy-L/Pytorch-Contrast-Adaptive-Sharpening/
 def contrast_adaptive_sharpening(image, amount):
-    img = T.functional.pad(image, (1, 1, 1, 1)).cpu()
+    img = T.functional.pad(image, (1, 1, 1, 1))
 
     a = img[..., :-2, :-2]
     b = img[..., :-2, 1:-1]

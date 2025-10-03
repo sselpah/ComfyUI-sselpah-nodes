@@ -1,11 +1,13 @@
+from concurrent.futures import ThreadPoolExecutor
 import os
 import torch
 from PIL import Image, ImageOps
 import numpy as np
 import folder_paths
+from functools import partial
 
 from .utils import encode_image_masked, contrast_adaptive_sharpening
-
+from torchvision.io import read_image, ImageReadMode
 try:
     import torchvision.transforms.v2 as T
 except ImportError:
@@ -32,8 +34,8 @@ class PrepClipVisionBatch:
     def preprocess_single_image(self, image, interpolation="LANCZOS", crop_position="center", sharpening=0.0):
         size = (224, 224)
         _, oh, ow, _ = image.shape
+        
         output = image.permute([0, 3, 1, 2])
-
         if crop_position == "pad":
             if oh != ow:
                 if oh > ow:
@@ -73,39 +75,43 @@ class PrepClipVisionBatch:
             output = contrast_adaptive_sharpening(output, sharpening)
 
         output = output.permute([0, 2, 3, 1])
-
         return (output,)
 
     VALID_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".bmp", ".tiff"}
 
     def path_to_image_tensor(self, path: str) -> torch.Tensor:
-        """Return (1, H, W, 3) float32 [0..1], EXIF-corrected, RGB."""
-        im = Image.open(path)
-        im = ImageOps.exif_transpose(im)
-        if im.mode != "RGB":
-            im = im.convert("RGB")
-        arr = np.asarray(im, dtype=np.float32) / 255.0  # (H, W, 3)
-        t = torch.from_numpy(arr).unsqueeze(0).contiguous()  # (1, H, W, 3)
-        return t
+        try:
+            # (C, H, W) uint8 in [0..255], RGB
+            chw = read_image(path, mode=ImageReadMode.RGB)
+            # t = (chw.to(torch.float32) / 255.0).permute(1, 2, 0).unsqueeze(0).contiguous()  # (1, H, W, 3)
+            t = chw.permute(1, 2, 0).unsqueeze(0)  # (1, H, W, 3) uint8
+            return t
+        except Exception:
+            # Fallback: keep your old, EXIF-aware path for rare cases
+            im = Image.open(path)
+            im = ImageOps.exif_transpose(im)
+            if im.mode != "RGB":
+                im = im.convert("RGB")
+            arr = np.asarray(im, dtype=np.float32) / 255.0  # (H, W, 3)
+            t = torch.from_numpy(arr).unsqueeze(0).contiguous()  # (1, H, W, 3)
+            return t
 
     def preprocess_image_batch(self, images_folder, interpolation, crop_position, sharpening):
-        tensors = []
-        for name in sorted(os.listdir(images_folder)):
-            ext = os.path.splitext(name)[1].lower()
-            if ext not in self.VALID_EXTS:
-                continue
-            path = os.path.join(images_folder, name)
+        
+        image_files = [os.path.join(images_folder, n) for n in os.listdir(images_folder)
+             if os.path.splitext(n)[1].lower() in self.VALID_EXTS]
 
-            img = self.path_to_image_tensor(path)  # (1,H,W,3) in [0,1]
-            (prepped,) = self.preprocess_single_image(
-                img, interpolation, crop_position, sharpening
-            )
-            tensors.append(prepped)
+        with ThreadPoolExecutor(max_workers=8) as ex:
+            tensors = list(ex.map(self.path_to_image_tensor, image_files))
+        prepped_tensors = []
+        func = partial(self.preprocess_single_image,
+                    interpolation=interpolation,
+                    crop_position=crop_position,
+                    sharpening=sharpening)
 
-        if not tensors:
-            raise RuntimeError("No valid images found in folder.")
-
-        batch = torch.cat(tensors, dim=0)  # (B,224,224,3)
+        with ThreadPoolExecutor(max_workers=8) as ex:
+            prepped_tensors = [r[0] for r in ex.map(func, tensors)]
+        batch = torch.cat(prepped_tensors, dim=0)  # (B,224,224,3)
         return (batch,)
 
 class IPAEncoderBatch:
